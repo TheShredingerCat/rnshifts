@@ -73,3 +73,32 @@ yarn-error.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+
+# React Native
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+*.log
+
+# Android
+android/.gradle/
+android/app/build/
+android/build/
+*.keystore
+
+# iOS
+ios/Pods/
+ios/build/
+*.xcworkspace
+*.xcuserstate
+
+# VSCode
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
