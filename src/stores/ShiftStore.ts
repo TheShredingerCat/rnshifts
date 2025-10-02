@@ -16,6 +16,7 @@ class ShiftStore {
     this.error = null;
     try {
       const data = await fetchShifts(lat, lon);
+
       const normalized: Shift[] = data.map((s: any, idx: number) => ({
         id: s.id?.toString?.() ?? `${s.address}-${s.dateStartByCity}-${idx}`,
         logo: s.logo ?? null,
@@ -26,23 +27,30 @@ class ShiftStore {
         timeEndByCity: String(s.timeEndByCity ?? ""),
         currentWorkers: Number(s.currentWorkers ?? 0),
         planWorkers: Number(s.planWorkers ?? 0),
-        workTypes: String(s.workTypes ?? ""),
+        workTypes: Array.isArray(s.workTypes)
+        ? s.workTypes.map((w: any) => w.name).join(", ")
+        : String(s.workTypes ?? ""),
         priceWorker: Number(s.priceWorker ?? 0),
-        customerFeedbacksCount: Number(s.customerFeedbacksCount ?? 0),
-        customerRating: Number(s.customerRating ?? 0),
+        customerFeedbacksCount: String(s.customerFeedbacksCount ?? ""),
+        customerRating: s.customerRating != null ? Number(s.customerRating) : null,
       }));
+
       runInAction(() => {
         this.shifts = normalized;
       });
     } catch (e: any) {
-      runInAction(() => { this.error = e?.message ?? "Failed to load"; });
+      runInAction(() => {
+        this.error = e?.message ?? "Failed to load";
+      });
     } finally {
-      runInAction(() => { this.isLoading = false; });
+      runInAction(() => {
+        this.isLoading = false;
+      });
     }
   }
 
   getById(id: string) {
-    return this.shifts.find(s => s.id === id) || null;
+    return this.shifts.find((s) => s.id === id) || null;
   }
 }
 

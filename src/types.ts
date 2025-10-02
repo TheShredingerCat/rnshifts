@@ -1,6 +1,6 @@
 export type Shift = {
   id: string;
-  logo: string | null;
+  logo: any | null;
   address: string;
   companyName: string;
   dateStartByCity: string;
@@ -10,6 +10,6 @@ export type Shift = {
   planWorkers: number;
   workTypes: string;
   priceWorker: number;
-  customerFeedbacksCount: number;
-  customerRating: number;
+  customerFeedbacksCount: string;
+  customerRating: number | null;
 };
